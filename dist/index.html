@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GSFIT - For The Athletes</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- AOS Animaciones -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+  <!-- Google Fonts: Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+
+  <style>
+    body, h1, h2 {
+      font-family: 'Montserrat', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-white dark:bg-black text-black dark:text-white">
+
+  <!-- NAV -->
+  <nav class="w-full bg-black text-white px-6 py-4 flex items-center justify-between">
+    <div class="font-extrabold text-2xl tracking-widest">GSFIT</div>
+    <ul class="flex space-x-6 text-lg">
+      <li><a href="/" class="hover:text-gray-300 transition">Inicio</a></li>
+      <li><a href="/entrenadores" class="hover:text-gray-300 transition">Entrenadores</a></li>
+      <li><a href="/planes" class="hover:text-gray-300 transition">Planes</a></li>
+      <li><a href="/contacto" class="hover:text-gray-300 transition">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- HEADER CON LOGO -->
+  <header class="w-full py-10 px-4 flex justify-center items-center bg-white dark:bg-black border-b border-gray-300 dark:border-gray-700">
+    <img src="/ruta-del-logo/B02AA4E9-CE33-4B32-81E8-0980CD58AC11.png"
+         alt="Logo GSFIT"
+         class="w-[200px] rounded-xl shadow-lg" />
+  </header>
+
+  <!-- SECCIONES ESTILO BLOQUES -->
+  <section class="flex flex-col md:flex-row items-center justify-between px-6 md:px-20 py-20 gap-12 bg-gray-50 dark:bg-gray-900">
+    <!-- Texto -->
+    <div class="w-full md:w-1/2" data-aos="fade-right">
+      <h2 class="text-3xl font-bold">Crea bloques de entrenamiento</h2>
+    </div>
+    <!-- Imagen -->
+    <div class="w-full md:w-1/2 flex justify-center" data-aos="fade-left">
+      <img src="/img/bloques.png"
+           alt="Crea bloques"
+           class="w-[70%] rounded-xl shadow-md" />
+    </div>
+  </section>
+
+  <section class="flex flex-col md:flex-row-reverse items-center justify-between px-6 md:px-20 py-20 gap-12 bg-white dark:bg-black">
+    <div class="w-full md:w-1/2" data-aos="fade-left">
+      <h2 class="text-3xl font-bold">Comparte los avances con tus atletas</h2>
+    </div>
+    <div class="w-full md:w-1/2 flex justify-center" data-aos="fade-right">
+      <img src="/img/avances.png"
+           alt="Comparte avances"
+           class="w-[70%] rounded-xl shadow-md" />
+    </div>
+  </section>
+
+  <section class="flex flex-col md:flex-row items-center justify-between px-6 md:px-20 py-20 gap-12 bg-gray-50 dark:bg-gray-900">
+    <div class="w-full md:w-1/2" data-aos="fade-right">
+      <h2 class="text-3xl font-bold">Organiza semanas y fases fácilmente</h2>
+    </div>
+    <div class="w-full md:w-1/2 flex justify-center" data-aos="fade-left">
+      <img src="/img/semanas.png"
+           alt="Organiza semanas"
+           class="w-[70%] rounded-xl shadow-md" />
+    </div>
+  </section>
+
+  <section class="flex flex-col md:flex-row-reverse items-center justify-between px-6 md:px-20 py-20 gap-12 bg-white dark:bg-black">
+    <div class="w-full md:w-1/2" data-aos="fade-left">
+      <h2 class="text-3xl font-bold">Visualiza el progreso de forma clara</h2>
+    </div>
+    <div class="w-full md:w-1/2 flex justify-center" data-aos="fade-right">
+      <img src="/img/progreso.png"
+           alt="Visualiza progreso"
+           class="w-[70%] rounded-xl shadow-md" />
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-700 p-4 text-center text-white">
+    <p>&copy; 2025 GSFIT - Todos los derechos reservados</p>
+  </footer>
+
+  <!-- AOS Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+</body>
+</html>
