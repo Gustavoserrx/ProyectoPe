@@ -16,76 +16,77 @@
 
   <style>
     body, h1, h2 {
-      font-family: 'Montserrat', sans-serif;
+      font-family: 'antonio', sans-serif;
     }
   </style>
 </head>
 <body class="bg-white dark:bg-black text-black dark:text-white">
 
   <!-- NAV -->
-  <nav class="w-full bg-black text-white px-6 py-4 flex items-center justify-between">
-    <div class="font-extrabold text-2xl tracking-widest">GSFIT</div>
-    <ul class="flex space-x-6 text-lg">
-      <li><a href="/" class="hover:text-gray-300 transition">Inicio</a></li>
-      <li><a href="/entrenadores" class="hover:text-gray-300 transition">Entrenadores</a></li>
-      <li><a href="/planes" class="hover:text-gray-300 transition">Planes</a></li>
-      <li><a href="/contacto" class="hover:text-gray-300 transition">Contacto</a></li>
-    </ul>
-  </nav>
+<nav class="w-full bg-black text-white px-6 py-4 flex items-center" data-aos="fade-down">
+  <div class="text-3xl tracking-normal uppercase"
+       style="color: transparent; -webkit-text-stroke: 1px white; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">
+    GSFIT
+  </div>
+  <ul class="flex space-x-6 ml-auto" style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">
+    <li>
+      <a href="/" class="transition duration-300 ease-in-out hover:text-blue-400 hover:scale-110 text-center">Inicio</a>
+    </li>
+    <li>
+      <a href="rutina.html" class="transition duration-300 ease-in-out hover:text-blue-400 hover:scale-110 text-center">Rutina</a>
+    </li>
+    <li>
+      <a href="/contacto" class="transition duration-300 ease-in-out hover:text-blue-400 hover:scale-110 text-center">Contacto</a>
+    </li>
+  </ul>
+</nav>
 
-  <!-- HEADER CON LOGO -->
-  <header class="w-full py-10 px-4 flex justify-center items-center bg-white dark:bg-black border-b border-gray-300 dark:border-gray-700">
-    <img src="/ruta-del-logo/B02AA4E9-CE33-4B32-81E8-0980CD58AC11.png"
-         alt="Logo GSFIT"
-         class="w-[200px] rounded-xl shadow-lg" />
-  </header>
+ 
 
-  <!-- SECCIONES ESTILO BLOQUES -->
-  <section class="flex flex-col md:flex-row items-center justify-between px-6 md:px-20 py-20 gap-12 bg-gray-50 dark:bg-gray-900">
-    <!-- Texto -->
-    <div class="w-full md:w-1/2" data-aos="fade-right">
-      <h2 class="text-3xl font-bold">Crea bloques de entrenamiento</h2>
-    </div>
-    <!-- Imagen -->
-    <div class="w-full md:w-1/2 flex justify-center" data-aos="fade-left">
-      <img src="/img/bloques.png"
-           alt="Crea bloques"
-           class="w-[70%] rounded-xl shadow-md" />
-    </div>
-  </section>
+<!-- SECCIONES ESTILO BLOQUES -->
+<section class="flex flex-col md:flex-row items-center justify-between px-6 md:px-20 py-20 gap-12 bg-white">
+  <div class="w-full md:w-1/2 flex items-center justify-center" data-aos="fade-right">
+    <h2 class="text-3xl md:text-4xl font-bold uppercase text-black font-serif">Crea Bloques</h2>
+  </div>
+  <div class="w-full md:w-1/2 flex items-center justify-center" data-aos="fade-left">
+    <img src="/Gráfico/Bloques.png"
+         alt="Crea bloques"
+         class="w-[70%] rounded-xl shadow-md" />
+  </div>
+</section>
 
-  <section class="flex flex-col md:flex-row-reverse items-center justify-between px-6 md:px-20 py-20 gap-12 bg-white dark:bg-black">
-    <div class="w-full md:w-1/2" data-aos="fade-left">
-      <h2 class="text-3xl font-bold">Comparte los avances con tus atletas</h2>
-    </div>
-    <div class="w-full md:w-1/2 flex justify-center" data-aos="fade-right">
-      <img src="/img/avances.png"
-           alt="Comparte avances"
-           class="w-[70%] rounded-xl shadow-md" />
-    </div>
-  </section>
+<section class="flex flex-col md:flex-row-reverse items-center justify-between px-6 md:px-20 py-20 gap-12 bg-gray-100">
+  <div class="w-full md:w-1/2 flex items-center justify-center uppercase" data-aos="fade-left">
+    <h2 class="text-3xl md:text-4xl font-bold font-serif text-blue-400">Comparte tus logros</h2>
+  </div>
+  <div class="w-full md:w-1/2 flex items-center justify-center" data-aos="fade-right">
+    <img src="/Gráfico/rrss.png"
+         alt="Comparte logros"
+         class="w-[70%] rounded-xl shadow-md" />
+  </div>
+</section>
 
-  <section class="flex flex-col md:flex-row items-center justify-between px-6 md:px-20 py-20 gap-12 bg-gray-50 dark:bg-gray-900">
-    <div class="w-full md:w-1/2" data-aos="fade-right">
-      <h2 class="text-3xl font-bold">Organiza semanas y fases fácilmente</h2>
-    </div>
-    <div class="w-full md:w-1/2 flex justify-center" data-aos="fade-left">
-      <img src="/img/semanas.png"
-           alt="Organiza semanas"
-           class="w-[70%] rounded-xl shadow-md" />
-    </div>
-  </section>
+<section class="flex flex-col md:flex-row items-center justify-between px-6 md:px-20 py-20 gap-12 bg-white">
+  <div class="w-full md:w-1/2 flex items-center justify-center" data-aos="fade-right">
+    <h2 class="text-3xl md:text-4xl font-bold font-serif uppercase text-black">Programa tus entrenamientos</h2>
+  </div>
+  <div class="w-full md:w-1/2 flex items-center justify-center" data-aos="fade-left">
+    <img src="/Gráfico/Semana.png"
+         alt="Programa tus entrenamientos"
+         class="w-[70%] rounded-xl shadow-md" />
+  </div>
+</section>
 
-  <section class="flex flex-col md:flex-row-reverse items-center justify-between px-6 md:px-20 py-20 gap-12 bg-white dark:bg-black">
-    <div class="w-full md:w-1/2" data-aos="fade-left">
-      <h2 class="text-3xl font-bold">Visualiza el progreso de forma clara</h2>
-    </div>
-    <div class="w-full md:w-1/2 flex justify-center" data-aos="fade-right">
-      <img src="/img/progreso.png"
-           alt="Visualiza progreso"
-           class="w-[70%] rounded-xl shadow-md" />
-    </div>
-  </section>
+<section class="flex flex-col md:flex-row-reverse items-center justify-between px-6 md:px-20 py-20 gap-12 bg-gray-100">
+  <div class="w-full md:w-1/2 flex items-center justify-center uppercase" data-aos="fade-left">
+    <h2 class="text-3xl md:text-4xl font-bold font-serif text-blue-400">Visualiza el progreso</h2>
+  </div>
+  <div class="w-full md:w-1/2 flex items-center justify-center" data-aos="fade-right">
+    <img src="/Gráfico/grafica.png"
+         alt="Visualiza progreso"
+         class="w-[70%] rounded-xl shadow-md" />
+  </div>
+</section>
 
   <!-- FOOTER -->
   <footer class="bg-gray-700 p-4 text-center text-white">
