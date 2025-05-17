@@ -14,19 +14,46 @@
     body { font-family: 'Montserrat', sans-serif; }
     .bloque::before { content: "🏋️"; margin-right: 8px; }
   </style>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
 </head>
 <body class="bg-white text-black dark:bg-black dark:text-white">
 
-  <!-- Encabezado -->
-  <header class="p-6 text-center border-b border-gray-300 dark:border-gray-700">
-    <h1 class="text-3xl font-bold">Crea tu rutina personalizada</h1>
-    <p class="text-gray-500 dark:text-gray-400 text-sm">Elige tus ejercicios y agrúpalos por días</p>
-  </header>
+  <!-- NAV -->
+  <nav class="w-full bg-transparent text-white px-6 py-4 absolute top-0 left-0 z-10 flex items-center justify-center" data-aos="fade-down">
+    <!-- Logo alineado a la izquierda -->
+    <div class="absolute left-6 text-2xl tracking-wider font-black uppercase font-serif" style="color: transparent; -webkit-text-stroke: 1px white;">
+      GSFIT
+    </div>
+    <!-- Menú centrado -->
+    <ul class="flex space-x-6 font-serif mx-auto">
+      <li>
+        <a href="/dist/index.html" class="transition duration-300 ease-in-out hover:text-blue-400 hover:scale-110 text-center">Inicio</a>
+      </li>
+      <li>
+        <a href="/contacto" class="transition duration-300 ease-in-out hover:text-blue-400 hover:scale-110 text-center">Contacto</a>
+      </li>
+    </ul>
+  </nav>
 
-  <main class="max-w-3xl mx-auto p-4 space-y-6">
+  <!-- Hero con video -->
+  <div class="relative w-full h-screen overflow-hidden bg-white z-0">
+    <video autoplay muted loop playsinline class="absolute w-full h-full object-cover">
+      <source src="/videos/2722910-hd_1920_1080_30fps.mp4" type="video/mp4">
+      Tu navegador no soporta el video HTML5.
+    </video>
+    <div class="absolute inset-0 bg-black/50 flex flex-col items-center justify-center pt-32 text-center z-20 transition-all duration-700 ease-in-out">
+      <h1 class="text-white text-4xl md:text-6xl font-bold uppercase font-serif" data-aos="fade-in">
+        Crea tu rutina personalizada
+      </h1>
+      <p class="text-gray-300 text-sm mt-2">Elige tus ejercicios y agrúpalos por días</p>
+    </div>
+  </div>
+
+  <div class="relative z-10 -mt-12 sm:-mt-16 pt-24 px-4 bg-white dark:bg-black">
+    <main class="max-w-3xl mx-auto bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg space-y-6">
 
     <!-- Formulario de bloque -->
-    <form id="formRutina" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+    <form id="formRutina" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" data-aos="fade-up">
       <!-- Día de la semana -->
       <select name="dia" required class="col-span-full px-4 py-2 border rounded bg-white dark:bg-gray-900 dark:text-white">
         <option value="">Selecciona el día</option>
@@ -57,7 +84,7 @@
     </form>
 
     <!-- Lista de bloques -->
-    <section id="listaRutina" class="space-y-6 border-t pt-6"></section>
+    <section id="listaRutina" class="space-y-6 border-t pt-6" data-aos="fade-up"></section>
 
     <!-- Volumen total -->
     <div id="volumenTotal" class="text-center text-sm text-gray-600 dark:text-gray-300 mt-2">
@@ -65,7 +92,7 @@
     </div>
 
     <!-- Acciones -->
-    <div class="flex flex-col sm:flex-row justify-center gap-4 mt-8">
+    <div class="flex flex-col sm:flex-row justify-center gap-4 mt-8" data-aos="fade-up">
       <button onclick="exportarPDF()" class="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition">
         Exportar PDF
       </button>
@@ -74,7 +101,8 @@
       </button>
     </div>
 
-  </main>
+    </main>
+  </div>
 
   <!-- Librerías -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -114,6 +142,7 @@
       const contenedorDia = document.getElementById('dia-' + dia) || crearSeccionDia(dia);
       const bloque = document.createElement('div');
       bloque.className = 'bloque relative border rounded-lg p-4 shadow-md bg-gray-100 dark:bg-gray-800';
+      bloque.setAttribute('data-aos', 'fade-up');
       bloque.innerHTML = `
         <button class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-sm" onclick="eliminarBloque(this, ${volumenBloque})">✖</button>
         <p class="font-semibold">${ejercicio}</p>
@@ -178,6 +207,10 @@
         document.querySelectorAll('.bloques').forEach(b => new Sortable(b, { animation: 150 }));
       }
     }
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init();
   </script>
 </body>
 </html>
