@@ -30,7 +30,7 @@
         <a href="/dist/index.html" class="transition duration-300 ease-in-out hover:text-blue-400 hover:scale-110 text-center">Inicio</a>
       </li>
       <li>
-        <a href="/contacto" class="transition duration-300 ease-in-out hover:text-blue-400 hover:scale-110 text-center">Contacto</a>
+        <a href="contacto.html" class="transition duration-300 ease-in-out hover:text-blue-400 hover:scale-110 text-center">Contacto</a>
       </li>
     </ul>
   </nav>
@@ -50,36 +50,40 @@
   </div>
 
   <div class="relative z-10 -mt-12 sm:-mt-16 pt-24 px-4 bg-white dark:bg-black">
-    <main class="max-w-3xl mx-auto bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg space-y-6">
+    <main class="max-w-3xl mx-auto bg-white dark:bg-black p-6 rounded-xl shadow-lg space-y-6">
 
     <!-- Formulario de bloque -->
-    <form id="formRutina" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" data-aos="fade-up">
+    <form id="formRutina" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 bg-gray-50 dark:bg-black p-6 rounded-xl shadow transition-all duration-300" data-aos="fade-up">
       <!-- Día de la semana -->
-      <select name="dia" required class="col-span-full px-4 py-2 border rounded bg-white dark:bg-gray-900 dark:text-white">
+      <select name="dia" required title="Selecciona el día de la semana" class="px-4 py-2 border rounded-md bg-white dark:bg-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200 col-span-full invalid:ring-2 invalid:ring-red-500" >
         <option value="">Selecciona el día</option>
         <option>Lunes</option><option>Martes</option><option>Miércoles</option>
         <option>Jueves</option><option>Viernes</option><option>Sábado</option><option>Domingo</option>
       </select>
 
       <!-- Ejercicio -->
-      <select name="ejercicio" id="ejercicio" required class="col-span-full px-4 py-2 border rounded bg-white dark:bg-gray-900 dark:text-white"></select>
+      <select name="ejercicio" id="ejercicio" required title="Selecciona un ejercicio" class="px-4 py-2 border rounded-md bg-white dark:bg-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200 col-span-full invalid:ring-2 invalid:ring-red-500"></select>
 
       <!-- Series, reps, carga -->
-      <input type="number" name="series" placeholder="Series" required class="px-4 py-2 border rounded bg-white dark:bg-gray-900 dark:text-white" />
-      <input type="number" name="reps" placeholder="Reps" required class="px-4 py-2 border rounded bg-white dark:bg-gray-900 dark:text-white" />
-      <input type="number" name="carga" placeholder="Carga (kg)" class="px-4 py-2 border rounded bg-white dark:bg-gray-900 dark:text-white" />
+      <input type="number" name="series" placeholder="Series" required title="Número de series del ejercicio" class="px-4 py-2 border rounded-md bg-white dark:bg-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200 invalid:ring-2 invalid:ring-red-500" />
+      <input type="number" name="reps" placeholder="Reps" required title="Repeticiones por serie" class="px-4 py-2 border rounded-md bg-white dark:bg-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200 invalid:ring-2 invalid:ring-red-500" />
+      <input type="number" name="carga" placeholder="Carga (kg)" title="Peso utilizado en kg" class="px-4 py-2 border rounded-md bg-white dark:bg-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200 invalid:ring-2 invalid:ring-red-500" />
 
       <!-- RPE -->
-      <select name="rpe" id="rpe" class="px-4 py-2 border rounded bg-white dark:bg-gray-900 dark:text-white">
+      <select name="rpe" id="rpe" title="Percepción del esfuerzo (1-10)" class="px-4 py-2 border rounded-md bg-white dark:bg-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200 invalid:ring-2 invalid:ring-red-500">
         <option value="">RPE</option>
       </select>
 
       <!-- Nota -->
-      <input type="text" name="nota" placeholder="Nota (opcional)" class="col-span-full px-4 py-2 border rounded bg-white dark:bg-gray-900 dark:text-white" />
+      <input type="text" name="nota" placeholder="Ej. subir peso progresivamente" class="px-4 py-2 border rounded-md bg-white dark:bg-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200 col-span-full" />
 
       <!-- Botón añadir -->
-      <button type="submit" class="col-span-full bg-black text-white rounded py-2 hover:bg-gray-800 transition">
-        Añadir bloque
+      <button type="submit" class="col-span-full bg-blue-600 text-white font-semibold rounded py-2 hover:bg-blue-700 transition">
+        <span id="btnText">Añadir bloque</span>
+        <svg id="btnSpinner" class="w-4 h-4 ml-2 animate-spin hidden inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+        </svg>
       </button>
     </form>
 
@@ -127,6 +131,13 @@
 
     form.addEventListener('submit', e => {
       e.preventDefault();
+      const btn = form.querySelector('button[type="submit"]');
+      const btnText = document.getElementById('btnText');
+      const btnSpinner = document.getElementById('btnSpinner');
+      btn.disabled = true;
+      btnText.textContent = 'Añadiendo...';
+      btnSpinner.classList.remove('hidden');
+
       const data = new FormData(form);
       const dia = data.get('dia');
       const ejercicio = data.get('ejercicio');
@@ -152,6 +163,11 @@
 
       contenedorDia.querySelector('.bloques').appendChild(bloque);
       guardarEnLocalStorage();
+
+      btn.disabled = false;
+      btnText.textContent = 'Añadir bloque';
+      btnSpinner.classList.add('hidden');
+
       form.reset();
     });
 

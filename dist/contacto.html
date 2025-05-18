@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contacto - Gustavo Serra</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('/Gráfico/IMG_0010.JPG') no-repeat top center;
+      background-size: cover;
+    }
+  </style>
+</head>
+<body class="text-white justify-center h-screen w-screen overflow-hidden flex flex-col">
+  <div id="preloader" class="fixed inset-0 flex items-center justify-center bg-black z-50">
+    <img src="/Gráfico/GSF.png" alt="Logo cargando" class="h-20 animate-pulse">
+  </div>
+  <!-- NAV -->
+  <nav class="w-full bg-transparent text-white px-6 py-4 absolute top-0 left-0 z-10 flex items-center justify-center" data-aos="fade-down">
+    <!-- Logo alineado a la izquierda -->
+    <div class="absolute left-6 text-2xl tracking-wider font-black uppercase font-serif" style="color: transparent; -webkit-text-stroke: 1px white;">
+      GSFIT
+    </div>
+    <!-- Menú centrado -->
+    <ul class="flex space-x-6 font-serif mx-auto">
+      <li>
+        <a href="index.html" class="transition duration-300 ease-in-out hover:text-blue-400 hover:scale-110 text-center">Inicio</a>
+      </li>
+      <li>
+        <a href="rutina.html" class="transition duration-300 ease-in-out hover:text-blue-400 hover:scale-110 text-center">Rutina</a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Contenido principal -->
+  <main class="flex-1 flex flex-col justify-center items-center text-center bg-black bg-opacity-40 px-4">
+    <h1 class="text-4xl md:text-6xl font-bold text-transparent stroke-white" style="-webkit-text-stroke: 1px white; font-family: 'Arial Black', sans-serif;">
+      GUSTAVO SERRA
+    </h1>
+      <p class="text-gray-300 text-sm mt-2">Atleta de Powerlifting -66KG</p>
+    <div class="absolute bottom-4 flex space-x-4 justify-center">
+      <a href="https://instagram.com/gustavoserrx" target="_blank" aria-label="Instagram">
+        <img src="/Gráfico/ig.webp" alt="Instagram" class="w-5 h-5 transition-transform duration-200 hover:scale-110 hover:brightness-125">
+      </a>
+      <a href="https://linkedin.com/in/gustavoserrx" target="_blank" aria-label="LinkedIn">
+        <img src="/Gráfico/LinkedIn.png" alt="LinkedIn" class="w-5 h-5 transition-transform duration-200 hover:scale-110 hover:brightness-125">
+      </a>
+    </div>
+  </main>
+  <script>
+    window.addEventListener('load', () => {
+      const preloader = document.getElementById('preloader');
+      preloader.classList.add('opacity-0');
+      setTimeout(() => preloader.style.display = 'none', 500);
+    });
+  </script>
+</body>
+</html>
