@@ -13,6 +13,10 @@
   <style>
     body { font-family: 'Montserrat', sans-serif; }
     .bloque::before { content: "🏋️"; margin-right: 8px; }
+    .invalid-campo {
+      border-color: #f87171; /* rojo Tailwind */
+      box-shadow: 0 0 0 2px rgba(248,113,113,0.5);
+    }
   </style>
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
 </head>
@@ -38,7 +42,7 @@
   <!-- Hero con video -->
   <div class="relative w-full h-screen overflow-hidden bg-white z-0">
     <video autoplay muted loop playsinline class="absolute w-full h-full object-cover">
-      <source src="/videos/2722910-hd_1920_1080_30fps.mp4" type="video/mp4">
+      <source src="/videos/1.mp4" type="video/mp4">
       Tu navegador no soporta el video HTML5.
     </video>
     <div class="absolute inset-0 bg-black/50 flex flex-col items-center justify-center pt-32 text-center z-20 transition-all duration-700 ease-in-out">
@@ -50,8 +54,8 @@
   </div>
 
   <div class="relative z-10 -mt-12 sm:-mt-16 pt-24 px-4 bg-white dark:bg-black">
-    <main class="max-w-3xl mx-auto bg-white dark:bg-black p-6 rounded-xl shadow-lg space-y-6">
-
+    <main class="max-w-3xl mx-auto bg-white dark:bg-black p-6 rounded-xl shadow-lg space-y-6 pb-24">
+<h2 class="text-2xl font-serif uppercase text-center" data-aos="fade-up">Crea tu propio bloque de entrenamiento</h2>
     <!-- Formulario de bloque -->
     <form id="formRutina" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 bg-gray-50 dark:bg-black p-6 rounded-xl shadow transition-all duration-300" data-aos="fade-up">
       <!-- Día de la semana -->
@@ -96,7 +100,7 @@
     </div>
 
     <!-- Acciones -->
-    <div class="flex flex-col sm:flex-row justify-center gap-4 mt-8" data-aos="fade-up">
+    <div class="flex flex-col sm:flex-row justify-center gap-4 mt-8 bg-white dark:bg-black p-4 fixed bottom-0 left-0 right-0 z-50 border-t border-gray-200 dark:border-gray-700" data-aos="fade-up">
       <button onclick="exportarPDF()" class="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition">
         Exportar PDF
       </button>
@@ -129,8 +133,27 @@
     const lista = document.getElementById('listaRutina');
     const volumenSpan = document.getElementById('volumen');
 
+    let intentoEnvio = false;
+
     form.addEventListener('submit', e => {
       e.preventDefault();
+      intentoEnvio = true;
+
+      // Validar campos requeridos
+      const campos = form.querySelectorAll('select[required], input[required]');
+      let valido = true;
+      campos.forEach(campo => {
+        if (!campo.value) {
+          campo.classList.add('invalid-campo');
+          valido = false;
+        } else {
+          campo.classList.remove('invalid-campo');
+        }
+      });
+
+      if (!valido) return;
+
+      // Si pasa validación, continuar con agregar bloque
       const btn = form.querySelector('button[type="submit"]');
       const btnText = document.getElementById('btnText');
       const btnSpinner = document.getElementById('btnSpinner');
