@@ -67,6 +67,14 @@
 
       <!-- Ejercicio -->
       <select name="ejercicio" id="ejercicio" required title="Selecciona un ejercicio" class="px-4 py-2 border rounded-md bg-white dark:bg-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200 col-span-full invalid:ring-2 invalid:ring-red-500"></select>
+      <div id="previewWrapper" class="col-span-full hidden">
+        <div class="grid grid-cols-5 grid-rows-5 gap-4">
+          <div id="videoPreview" class="col-span-3 row-span-5 rounded-lg overflow-hidden"></div>
+          <div id="mapaMuscular" class="col-span-2 row-span-5 col-start-4">
+            <img id="imagenMusculo" src="" alt="Mapa muscular del ejercicio" class="w-full h-full object-contain rounded-lg shadow-lg">
+          </div>
+        </div>
+      </div>
 
       <!-- Series, reps, carga -->
       <input type="number" name="series" placeholder="Series" required title="Número de series del ejercicio" class="px-4 py-2 border rounded-md bg-white dark:bg-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200 invalid:ring-2 invalid:ring-red-500" />
@@ -117,12 +125,69 @@
 
   <!-- Script funcional -->
   <script>
-    const ejercicios = ['Sentadilla','Press de banca','Peso muerto','Remo con barra','Dominadas','Press militar','Curl de bíceps','Hip thrust'];
+    let ejercicios = [];
+
+    async function obtenerEjercicios() {
+      try {
+        const res = await fetch('http://localhost:5100/api/ejercicios');
+        const data = await res.json();
+        ejercicios = data;
+        const ejSelect = document.getElementById('ejercicio');
+        ejercicios.forEach(ej => {
+          ejSelect.innerHTML += `<option value="${ej.nombre}">${ej.nombre}</option>`;
+        });
+      } catch (error) {
+        console.error('Error al cargar ejercicios:', error);
+      }
+    }
+    const videoPreview = document.getElementById('videoPreview');
+    const ejSelect = document.getElementById('ejercicio');
+    const mapaMuscular = document.getElementById('mapaMuscular');
+    const imagenMusculo = document.getElementById('imagenMusculo');
+    const previewWrapper = document.getElementById('previewWrapper');
+
+    ejSelect.addEventListener('change', () => {
+      const ejercicioSeleccionado = ejercicios.find(ej => ej.nombre === ejSelect.value);
+      if (ejercicioSeleccionado && ejercicioSeleccionado.videoUrl) {
+        const videoIdMatch = ejercicioSeleccionado.videoUrl.match(/(?:v=|\/)([a-zA-Z0-9_-]{11})/);
+        const videoId = videoIdMatch ? videoIdMatch[1] : null;
+
+        if (videoId) {
+          videoPreview.innerHTML = `
+            <iframe 
+              class="w-full h-full rounded-lg" 
+              src="https://www.youtube.com/embed/${videoId}" 
+              title="Video de ${ejercicioSeleccionado.nombre}" 
+              frameborder="0" allowfullscreen
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            ></iframe>
+          `;
+          previewWrapper.classList.remove('hidden');
+
+          if (ejercicioSeleccionado.nombre === "Sentadilla") {
+            imagenMusculo.src = "/mapas/sentadilla.png";
+          } else if (ejercicioSeleccionado.nombre === "Press de banca") {
+            imagenMusculo.src = "mapas/pressbanca.png";
+          } else if (ejercicioSeleccionado.nombre === "Peso muerto") {
+            imagenMusculo.src = "/mapas/pesomuerto.png";
+          } else {
+            imagenMusculo.src = "";
+          }
+        } else {
+          videoPreview.innerHTML = '';
+          previewWrapper.classList.add('hidden');
+        }
+      } else {
+        videoPreview.innerHTML = '';
+        previewWrapper.classList.add('hidden');
+      }
+    });
+
     let volumenTotal = 0;
 
     window.addEventListener('DOMContentLoaded', () => {
       const ejSelect = document.getElementById('ejercicio');
-      ejercicios.forEach(ej => ejSelect.innerHTML += `<option value="${ej}">${ej}</option>`);
+      obtenerEjercicios();
       for (let i = 1; i <= 10; i++) {
         document.getElementById('rpe').innerHTML += `<option value="${i}">${i}</option>`;
       }
