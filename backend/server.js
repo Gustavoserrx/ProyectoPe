@@ -1,47 +1,40 @@
-require('dotenv').config();  // Carga variables del archivo .env
+// Carga variables de entorno (usa './.env.local' si quieres, o solo .env)
+require('dotenv').config({ path: './backend/.env.local' });
 
-const mongoose = require('mongoose');
-
-const uri = process.env.MONGODB_URI;
-
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Conexión a MongoDB exitosa'))
-  .catch(err => console.error('Error al conectar a MongoDB:', err));
-// Cargamos las variables de entorno (como MONGO_URI y PORT)
-require('dotenv').config({ path: './.env.local' });
-// Importamos módulos necesarios
+console.log('MONGODB_URI:', process.env.MONGODB_URI);
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
+const mongoose = require('mongoose');
 
-// Inicializamos la app de Express
 const app = express();
 
-// Configuración CORS para permitir todos los orígenes durante el desarrollo
+// Leer la URI desde la variable de entorno correcta
+const uri = process.env.MONGODB_URI;
+
+if (!uri) {
+  console.error('❌ Error: La variable MONGODB_URI no está definida en .env');
+  process.exit(1);
+}
+
+// Conexión a MongoDB
+mongoose.connect(uri)
+  .then(() => console.log('✅ Conectado a MongoDB Atlas'))
+  .catch(err => console.error('❌ Error de conexión a MongoDB:', err));
+
+// Middleware CORS
 app.use(cors({
   origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type'],
 }));
 
-// Middleware para que Express entienda JSON
 app.use(express.json());
 
-// Ruta de prueba para comprobar que el servidor funciona
-app.get('/', (req, res) => res.send('API Rutinas funcionando 🔥'));
-
-// Conexión a MongoDB usando Mongoose
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('✅ Conectado a MongoDB Atlas'))
-  .catch(err => console.error('❌ Error de conexión a MongoDB:', err));
-
-// Modelos
+// Importar modelos
 const Ejercicio = require('./modelos/ejercicio');
 const Rutina = require('./modelos/rutina');
 
-// --- RUTAS EJERCICIOS ---
-
-// Obtener todos los ejercicios
+// Rutas ejercicios
 app.get('/api/ejercicios', async (req, res) => {
   try {
     const ejercicios = await Ejercicio.find();
@@ -51,7 +44,6 @@ app.get('/api/ejercicios', async (req, res) => {
   }
 });
 
-// Crear ejercicio
 app.post('/api/ejercicio', async (req, res) => {
   try {
     const nuevoEjercicio = new Ejercicio(req.body);
@@ -62,9 +54,7 @@ app.post('/api/ejercicio', async (req, res) => {
   }
 });
 
-// --- RUTINAS ---
-
-// Obtener rutinas filtrando por usuario y/o semana (opcional)
+// Rutas rutinas
 app.get('/api/rutina', async (req, res) => {
   try {
     const filtros = {};
@@ -72,8 +62,8 @@ app.get('/api/rutina', async (req, res) => {
     if (req.query.semana) filtros.semana = req.query.semana;
 
     const rutinas = await Rutina.find(filtros)
-      .populate('usuario', 'nombre email')   // si tienes modelo usuario con nombre y email
-      .populate('dias.ejercicios.ejercicio'); // carga detalles ejercicios
+      .populate('usuario', 'nombre email')
+      .populate('dias.ejercicios.ejercicio');
 
     res.json(rutinas);
   } catch (error) {
@@ -81,7 +71,6 @@ app.get('/api/rutina', async (req, res) => {
   }
 });
 
-// Crear rutina
 app.post('/api/rutina', async (req, res) => {
   try {
     const nuevaRutina = new Rutina(req.body);
@@ -92,9 +81,14 @@ app.post('/api/rutina', async (req, res) => {
   }
 });
 
-// Ponemos a escuchar el servidor en el puerto indicado
+// Ruta de prueba
+app.get('/', (req, res) => res.send('API Rutinas funcionando 🔥'));
+
+// Rutas auth
+app.use('/api/auth', require('./routes/auth'));
+
+// Puerto
 const PORT = process.env.PORT || 5100;
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
 });
-app.use('/api/auth', require('./routes/auth'));
