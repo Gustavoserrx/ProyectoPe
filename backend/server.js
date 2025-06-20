@@ -1,3 +1,12 @@
+require('dotenv').config();  // Carga variables del archivo .env
+
+const mongoose = require('mongoose');
+
+const uri = process.env.MONGODB_URI;
+
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Conexión a MongoDB exitosa'))
+  .catch(err => console.error('Error al conectar a MongoDB:', err));
 // Cargamos las variables de entorno (como MONGO_URI y PORT)
 require('dotenv').config({ path: './.env.local' });
 // Importamos módulos necesarios

@@ -1,0 +1,21 @@
+# Node.js dependencies
+node_modules/
+
+# Variables de entorno con credenciales sensibles
+.env
+
+# Archivos de logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# MacOS system files
+.DS_Store
+
+# Build output (si usas algún build tool)
+dist/
+build/
+
+# Archivos temporales o de caché
+*.log
+*.tmp
