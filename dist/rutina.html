@@ -42,7 +42,7 @@
   <!-- Hero con video -->
   <div class="relative w-full h-screen overflow-hidden bg-white z-0">
     <video autoplay muted loop playsinline class="absolute w-full h-full object-cover">
-      <source src="/videos/1.mp4" type="video/mp4">
+      <source src="/videos/1.MOV" type="video/mp4">
       Tu navegador no soporta el video HTML5.
     </video>
     <div class="absolute inset-0 bg-black/50 flex flex-col items-center justify-center pt-32 text-center z-20 transition-all duration-700 ease-in-out">
@@ -68,12 +68,7 @@
       <!-- Ejercicio -->
       <select name="ejercicio" id="ejercicio" required title="Selecciona un ejercicio" class="px-4 py-2 border rounded-md bg-white dark:bg-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200 col-span-full invalid:ring-2 invalid:ring-red-500"></select>
       <div id="previewWrapper" class="col-span-full hidden">
-        <div class="grid grid-cols-5 grid-rows-5 gap-4">
-          <div id="videoPreview" class="col-span-3 row-span-5 rounded-lg overflow-hidden"></div>
-          <div id="mapaMuscular" class="col-span-2 row-span-5 col-start-4">
-            <img id="imagenMusculo" src="" alt="Mapa muscular del ejercicio" class="w-full h-full object-contain rounded-lg shadow-lg">
-          </div>
-        </div>
+        <div id="videoPreview" class="w-full h-64 rounded-lg overflow-hidden"></div>
       </div>
 
       <!-- Series, reps, carga -->
@@ -142,9 +137,15 @@
     }
     const videoPreview = document.getElementById('videoPreview');
     const ejSelect = document.getElementById('ejercicio');
-    const mapaMuscular = document.getElementById('mapaMuscular');
-    const imagenMusculo = document.getElementById('imagenMusculo');
     const previewWrapper = document.getElementById('previewWrapper');
+
+    function obtenerEjercicioInterno(nombre) {
+      const n = nombre.toLowerCase();
+      if (n.includes('sentadilla')) return 'squat';
+      if (n.includes('press')) return 'bench';
+      if (n.includes('muerto')) return 'deadlift';
+      return 'squat';
+    }
 
     ejSelect.addEventListener('change', () => {
       const ejercicioSeleccionado = ejercicios.find(ej => ej.nombre === ejSelect.value);
@@ -163,16 +164,6 @@
             ></iframe>
           `;
           previewWrapper.classList.remove('hidden');
-
-          if (ejercicioSeleccionado.nombre === "Sentadilla") {
-            imagenMusculo.src = "/mapas/sentadilla.png";
-          } else if (ejercicioSeleccionado.nombre === "Press de banca") {
-            imagenMusculo.src = "mapas/pressbanca.png";
-          } else if (ejercicioSeleccionado.nombre === "Peso muerto") {
-            imagenMusculo.src = "/mapas/pesomuerto.png";
-          } else {
-            imagenMusculo.src = "";
-          }
         } else {
           videoPreview.innerHTML = '';
           previewWrapper.classList.add('hidden');
@@ -316,5 +307,6 @@
   <script>
     AOS.init();
   </script>
+
 </body>
 </html>

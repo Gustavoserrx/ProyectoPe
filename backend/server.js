@@ -1,5 +1,5 @@
 // Carga variables de entorno (usa './.env.local' si quieres, o solo .env)
-require('dotenv').config({ path: './backend/.env.local' });
+require('dotenv').config({ path: './.env.local' });
 
 console.log('MONGODB_URI:', process.env.MONGODB_URI);
 const express = require('express');
