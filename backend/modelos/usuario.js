@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
-const UsuarioSchema = new mongoose.Schema({
-  nombre: String,
-  email: { type: String, required: true, unique: true },
-  password: String, // Encriptado (usaremos bcrypt)
-  rol: { type: String, enum: ['admin', 'usuario'], default: 'usuario' }
+const UserSchema = new mongoose.Schema({
+  email: { type: String, required: true, unique: true, lowercase: true, trim: true },
+  password: { type: String, required: true },
+}, {
+  collection: 'usuarios'
 });
 
-module.exports = mongoose.model('Usuario', UsuarioSchema);
+module.exports = mongoose.model('User', UserSchema);

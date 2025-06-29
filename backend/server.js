@@ -7,6 +7,14 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 const app = express();
+app.use(express.json());
+
+app.use((req, res, next) => {
+  console.log('🗂️ METHOD:', req.method);
+  console.log('🛣️ URL:', req.url);
+  console.log('📦 BODY:', req.body);
+  next();
+});
 
 // Leer la URI desde la variable de entorno correcta
 const uri = process.env.MONGODB_URI;
@@ -27,8 +35,6 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type'],
 }));
-
-app.use(express.json());
 
 // Importar modelos
 const Ejercicio = require('./modelos/ejercicio');

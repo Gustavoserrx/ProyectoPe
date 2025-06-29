@@ -1,83 +1,69 @@
-// backend/routes/auth.js
+const jwt = require('jsonwebtoken');
+const JWT_SECRET = process.env.JWT_SECRET || 'una_clave_super_secreta';
 const express = require('express');
 const router = express.Router();
-const Usuario = require('../modelos/usuario');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const User = require('../modelos/usuario'); // Ajusta ruta si es necesario
+const bcrypt = require('bcrypt');
+const rateLimit = require('express-rate-limit');
 
-router.post('/login', async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const usuario = await Usuario.findOne({ email });
-    if (!usuario) return res.status(400).json({ mensaje: 'Usuario o contraseña incorrecta' });
-
-    const passwordValido = await bcrypt.compare(password, usuario.password);
-    if (!passwordValido) return res.status(400).json({ mensaje: 'Usuario o contraseña incorrecta' });
-
-    // Generar token con id y rol
-    const token = jwt.sign(
-      { id: usuario._id, rol: usuario.rol },
-      process.env.JWT_SECRET,
-      { expiresIn: '12h' }
-    );
-
-    res.json({ token, rol: usuario.rol });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ mensaje: 'Error en el servidor' });
-  }
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutos
+  max: 5, // máximo 5 intentos por IP
+  message: { message: 'Demasiados intentos, prueba en 15 minutos' }
 });
 
-router.post('/registro', async (req, res) => {
-  try {
-    const { nombre, email, password, rol } = req.body;
+router.post('/register', async (req, res, next) => {
+  const { email, password } = req.body;
 
-    const existeUsuario = await Usuario.findOne({ email });
-    if (existeUsuario) return res.status(400).json({ mensaje: 'Email ya registrado' });
+  try {
+    console.log('Register data:', req.body);
+
+    const existingUser = await User.findOne({ email: email.toLowerCase() });
+    if (existingUser) {
+      return res.status(400).json({ message: 'Usuario ya existe' });
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({ email: email.toLowerCase(), password: hashedPassword });
+    await newUser.save();
 
-    const nuevoUsuario = new Usuario({
-      nombre,
-      email,
-      password: hashedPassword,
-      rol: rol || 'usuario'
-    });
-
-    await nuevoUsuario.save();
-
-    res.status(201).json({ mensaje: 'Usuario creado correctamente' });
+    res.json({ message: 'Usuario creado correctamente' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ mensaje: 'Error en el servidor' });
+    next(error);
   }
 });
 
-function verificarToken(req, res, next) {
-  const authHeader = req.headers['authorization'];
-  if (!authHeader) return res.status(401).json({ mensaje: 'No autorizado' });
+router.post('/login', loginLimiter, async (req, res, next) => {
+  const { email, password } = req.body;
 
-  const token = authHeader.split(' ')[1];
-  if (!token) return res.status(401).json({ mensaje: 'No autorizado' });
+  console.log('Email recibido:', email);
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-    if (err) return res.status(403).json({ mensaje: 'Token inválido' });
-    req.usuario = decoded;
-    next();
-  });
-}
+  try {
+    const user = await User.findOne({ email: email.toLowerCase() });
+    console.log('Usuario encontrado:', user);
 
-function permisoRol(rolesPermitidos) {
-  return (req, res, next) => {
-    if (!rolesPermitidos.includes(req.usuario.rol)) {
-      return res.status(403).json({ mensaje: 'Acceso denegado' });
+    if (!user) {
+      console.log('⚠️ Usuario NO encontrado en la colección usuarios');
+      return res.status(401).json({ message: 'Usuario no encontrado' });
     }
-    next();
-  };
-}
 
-// Attach these as properties to the router for external use if needed:
-router.verificarToken = verificarToken;
-router.permisoRol = permisoRol;
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    console.log('Contraseña válida?', isPasswordValid);
+
+    if (!isPasswordValid) {
+      console.log('⚠️ Contraseña INCORRECTA');
+      return res.status(401).json({ message: 'Contraseña incorrecta' });
+    }
+
+    const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
+    console.log('✅ Inicio de sesión exitoso');
+    return res.json({ message: 'Inicio de sesión exitoso', token });
+
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
 
 module.exports = router;
