@@ -21,7 +21,13 @@
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
 </head>
 <body class="bg-white text-black dark:bg-black dark:text-white">
-
+<script>
+  // Si NO está logueado, redirige a index.html
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
+  if (!isLoggedIn) {
+    window.location.href = '/dist/index.html';
+  }
+</script>
   <!-- NAV -->
   <nav class="w-full bg-transparent text-white px-6 py-4 absolute top-0 left-0 z-10 flex items-center justify-center" data-aos="fade-down">
     <!-- Logo alineado a la izquierda -->

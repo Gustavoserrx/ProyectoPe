@@ -21,7 +21,14 @@
   </style>
 </head>
 <body class="bg-white dark:bg-black text-black dark:text-white overflow-hidden">
-
+<script>
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
+  if (!isLoggedIn) {
+    document.querySelectorAll('a[href="rutina.html"]').forEach(link => {
+      link.style.display = 'none';
+    });
+  }
+</script>
   <!-- NAV -->
   <nav class="w-full bg-transparent text-white px-6 py-4 absolute top-0 left-0 z-10 flex items-center justify-center" data-aos="fade-down">
     <!-- Logo alineado a la izquierda -->
