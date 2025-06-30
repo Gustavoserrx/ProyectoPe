@@ -11,7 +11,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
 
   <style>
-    body { font-family: 'Montserrat', sans-serif; }
+    body, select, input, button, textarea {
+      font-family: serif;
+    }
     .bloque::before { content: "🏋️"; margin-right: 8px; }
     .invalid-campo {
       border-color: #f87171; /* rojo Tailwind */
@@ -21,21 +23,21 @@
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
 </head>
 <body class="bg-white text-black dark:bg-black dark:text-white">
-<script>
+<!-- <script>
   // Si NO está logueado, redirige a index.html
   const isLoggedIn = localStorage.getItem('isLoggedIn');
   if (!isLoggedIn) {
     window.location.href = '/dist/index.html';
   }
-</script>
+</script> -->
   <!-- NAV -->
   <nav class="w-full bg-transparent text-white px-6 py-4 absolute top-0 left-0 z-10 flex items-center justify-center" data-aos="fade-down">
     <!-- Logo alineado a la izquierda -->
-    <div class="absolute left-6 text-2xl tracking-wider font-black uppercase font-serif" style="color: transparent; -webkit-text-stroke: 1px white;">
+    <div class="absolute left-6 text-2xl tracking-wider font-black uppercase" style="color: transparent; -webkit-text-stroke: 1px white;">
       GSFIT
     </div>
     <!-- Menú centrado -->
-    <ul class="flex space-x-6 font-serif mx-auto">
+    <ul class="flex space-x-6 mx-auto">
       <li>
         <a href="/dist/index.html" class="transition duration-300 ease-in-out hover:text-blue-400 hover:scale-110 text-center">Inicio</a>
       </li>
@@ -52,7 +54,7 @@
       Tu navegador no soporta el video HTML5.
     </video>
     <div class="absolute inset-0 bg-black/50 flex flex-col items-center justify-center pt-32 text-center z-20 transition-all duration-700 ease-in-out">
-      <h1 class="text-white text-4xl md:text-6xl font-bold uppercase font-serif" data-aos="fade-in">
+      <h1 class="text-white text-4xl md:text-6xl font-bold uppercase" data-aos="fade-in">
         Crea tu rutina personalizada
       </h1>
       <p class="text-gray-300 text-sm mt-2">Elige tus ejercicios y agrúpalos por días</p>
@@ -61,34 +63,60 @@
 
   <div class="relative z-10 -mt-12 sm:-mt-16 pt-24 px-4 bg-white dark:bg-black">
     <main class="max-w-3xl mx-auto bg-white dark:bg-black p-6 rounded-xl shadow-lg space-y-6 pb-24">
-<h2 class="text-2xl font-serif uppercase text-center" data-aos="fade-up">Crea tu propio bloque de entrenamiento</h2>
+<h2 class="text-2xl uppercase text-center" data-aos="fade-up">Crea tu propio bloque de entrenamiento</h2>
     <!-- Formulario de bloque -->
-    <form id="formRutina" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 bg-gray-50 dark:bg-black p-6 rounded-xl shadow transition-all duration-300" data-aos="fade-up">
-      <!-- Día de la semana -->
-      <select name="dia" required title="Selecciona el día de la semana" class="px-4 py-2 border rounded-md bg-white dark:bg-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200 col-span-full invalid:ring-2 invalid:ring-red-500" >
-        <option value="">Selecciona el día</option>
-        <option>Lunes</option><option>Martes</option><option>Miércoles</option>
-        <option>Jueves</option><option>Viernes</option><option>Sábado</option><option>Domingo</option>
-      </select>
+    <form id="formRutina" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-black p-8 rounded-xl shadow-xl transition-all duration-300" data-aos="fade-up">
 
-      <!-- Ejercicio -->
-      <select name="ejercicio" id="ejercicio" required title="Selecciona un ejercicio" class="px-4 py-2 border rounded-md bg-white dark:bg-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200 col-span-full invalid:ring-2 invalid:ring-red-500"></select>
+      <!-- Información básica -->
+      <div class="col-span-full">
+        <h3 class="text-lg font-bold mb-2 border-b border-gray-300 dark:border-gray-700 pb-1">Información básica</h3>
+      </div>
+
+      <div class="relative col-span-full">
+        <select id="dia" name="dia" required title="Selecciona el día de la semana"
+          class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-transparent text-black text-opacity-90 dark:text-white dark:text-opacity-90 focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none transition">
+          <option value="" disabled selected hidden>Selecciona el día</option>
+          <option>Lunes</option><option>Martes</option><option>Miércoles</option>
+          <option>Jueves</option><option>Viernes</option><option>Sábado</option><option>Domingo</option>
+        </select>
+        <div class="pointer-events-none absolute inset-y-0 right-3 flex items-center">
+          <svg class="w-4 h-4 text-gray-500 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="relative col-span-full">
+        <select id="ejercicio" name="ejercicio" required title="Selecciona un ejercicio"
+          class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-transparent text-black text-opacity-90 dark:text-white dark:text-opacity-90 focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none transition">
+          <option value="" disabled selected hidden>Escoge un ejercicio</option>
+        </select>
+        <div class="pointer-events-none absolute inset-y-0 right-3 flex items-center">
+          <svg class="w-4 h-4 text-gray-500 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </div>
+      </div>
       <div id="previewWrapper" class="col-span-full hidden">
         <div id="videoPreview" class="w-full h-64 rounded-lg overflow-hidden"></div>
       </div>
 
-      <!-- Series, reps, carga -->
-      <input type="number" name="series" placeholder="Series" required title="Número de series del ejercicio" class="px-4 py-2 border rounded-md bg-white dark:bg-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200 invalid:ring-2 invalid:ring-red-500" />
-      <input type="number" name="reps" placeholder="Reps" required title="Repeticiones por serie" class="px-4 py-2 border rounded-md bg-white dark:bg-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200 invalid:ring-2 invalid:ring-red-500" />
-      <input type="number" name="carga" placeholder="Carga (kg)" title="Peso utilizado en kg" class="px-4 py-2 border rounded-md bg-white dark:bg-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200 invalid:ring-2 invalid:ring-red-500" />
+      <!-- Detalles del entrenamiento -->
+      <div class="col-span-full">
+        <h3 class="text-lg font-bold mb-2 border-b border-gray-300 dark:border-gray-700 pb-1">Detalles del entrenamiento</h3>
+      </div>
 
-      <!-- RPE -->
-      <select name="rpe" id="rpe" title="Percepción del esfuerzo (1-10)" class="px-4 py-2 border rounded-md bg-white dark:bg-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200 invalid:ring-2 invalid:ring-red-500">
-        <option value="">RPE</option>
-      </select>
+      <input id="series" type="number" name="series" required min="1" title="Número de series del ejercicio" placeholder="Series" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-transparent text-black text-opacity-90 dark:text-white dark:text-opacity-90 focus:outline-none focus:ring-2 focus:ring-blue-500 transition appearance-none" />
+      <input id="reps" type="number" name="reps" required min="1" title="Repeticiones por serie" placeholder="Reps" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-transparent text-black text-opacity-90 dark:text-white dark:text-opacity-90 focus:outline-none focus:ring-2 focus:ring-blue-500 transition appearance-none" />
+      <input id="carga" type="number" name="carga" title="Peso utilizado en kg" placeholder="Carga (kg)" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-transparent text-black text-opacity-90 dark:text-white dark:text-opacity-90 focus:outline-none focus:ring-2 focus:ring-blue-500 transition appearance-none" />
+      <input id="RPE" type="number" name="rpe" min="1" max="10" title="Percepción del esfuerzo" placeholder="RPE (1-10)" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-transparent text-black text-opacity-90 dark:text-white dark:text-opacity-90 focus:outline-none focus:ring-2 focus:ring-blue-500 transition appearance-none" />
 
-      <!-- Nota -->
-      <input type="text" name="nota" placeholder="Ej. subir peso progresivamente" class="px-4 py-2 border rounded-md bg-white dark:bg-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200 col-span-full" />
+      <!-- Notas -->
+      <div class="col-span-full">
+        <h3 class="text-lg font-bold mb-2 border-b border-gray-300 dark:border-gray-700 pb-1">Notas</h3>
+      </div>
+
+      <input id="nota" type="text" name="nota" placeholder="Ej. subir peso progresivamente" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-transparent text-black text-opacity-90 dark:text-white dark:text-opacity-90 focus:outline-none focus:ring-2 focus:ring-blue-500 transition appearance-none col-span-full" />
 
       <!-- Botón añadir -->
       <button type="submit" class="col-span-full bg-blue-600 text-white font-semibold rounded py-2 hover:bg-blue-700 transition">
@@ -103,10 +131,8 @@
     <!-- Lista de bloques -->
     <section id="listaRutina" class="space-y-6 border-t pt-6" data-aos="fade-up"></section>
 
-    <!-- Volumen total -->
-    <div id="volumenTotal" class="text-center text-sm text-gray-600 dark:text-gray-300 mt-2">
-      Volumen total: <span id="volumen">0</span> kg
-    </div>
+    <!-- Mensaje de feedback -->
+    <div id="mensaje" class="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow hidden z-50"></div>
 
     <!-- Acciones -->
     <div class="flex flex-col sm:flex-row justify-center gap-4 mt-8 bg-white dark:bg-black p-4 fixed bottom-0 left-0 right-0 z-50 border-t border-gray-200 dark:border-gray-700" data-aos="fade-up">
@@ -180,8 +206,6 @@
       }
     });
 
-    let volumenTotal = 0;
-
     window.addEventListener('DOMContentLoaded', () => {
       const ejSelect = document.getElementById('ejercicio');
       obtenerEjercicios();
@@ -193,7 +217,6 @@
 
     const form = document.getElementById('formRutina');
     const lista = document.getElementById('listaRutina');
-    const volumenSpan = document.getElementById('volumen');
 
     let intentoEnvio = false;
 
@@ -231,16 +254,15 @@
       const carga = +data.get('carga') || 0;
       const rpe = data.get('rpe') || '-';
       const nota = data.get('nota') || '';
-      const volumenBloque = series * reps * carga;
-      volumenTotal += volumenBloque;
-      volumenSpan.textContent = volumenTotal;
+
+      // Ya no se calcula ni muestra volumen total
 
       const contenedorDia = document.getElementById('dia-' + dia) || crearSeccionDia(dia);
       const bloque = document.createElement('div');
       bloque.className = 'bloque relative border rounded-lg p-4 shadow-md bg-gray-100 dark:bg-gray-800';
       bloque.setAttribute('data-aos', 'fade-up');
       bloque.innerHTML = `
-        <button class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-sm" onclick="eliminarBloque(this, ${volumenBloque})">✖</button>
+        <button class="absolute top-2 right-2 text-red-500 hover:text-red-700 text-sm" onclick="eliminarBloque(this)">✖</button>
         <p class="font-semibold">${ejercicio}</p>
         <p>${series} x ${reps} — ${carga || '-'} kg @ RPE ${rpe}</p>
         ${nota ? `<p class="text-sm text-gray-500">${nota}</p>` : ''}
@@ -254,6 +276,8 @@
       btnSpinner.classList.add('hidden');
 
       form.reset();
+
+      mostrarMensaje('Bloque añadido correctamente ✅');
     });
 
     function crearSeccionDia(dia) {
@@ -266,26 +290,21 @@
       return seccion;
     }
 
-    function eliminarBloque(btn, volumen) {
-      volumenTotal -= volumen;
-      volumenSpan.textContent = volumenTotal;
+    function eliminarBloque(btn) {
       btn.parentElement.remove();
       guardarEnLocalStorage();
     }
 
     function limpiarRutina() {
       lista.innerHTML = '';
-      volumenTotal = 0;
-      volumenSpan.textContent = 0;
       localStorage.removeItem('rutinaHTML');
-      localStorage.removeItem('volumenTotal');
     }
 
     function exportarPDF() {
       const contenido = document.createElement('div');
       contenido.innerHTML = `<h1 style="font-family: Montserrat; font-size: 24px; font-weight: bold; margin-bottom: 20px;">Rutina GSFIT</h1>` +
-                            lista.innerHTML +
-                            `<p style="margin-top: 20px; font-weight: bold;">Volumen total: ${volumenTotal} kg</p>`;
+                            lista.innerHTML;
+                            // Se eliminó la línea que añadía volumen total
       html2pdf().from(contenido).set({
         margin: 0.5,
         filename: 'rutina_gsfit.pdf',
@@ -297,16 +316,22 @@
 
     function guardarEnLocalStorage() {
       localStorage.setItem('rutinaHTML', lista.innerHTML);
-      localStorage.setItem('volumenTotal', volumenTotal);
+      // Se eliminó la línea que guardaba volumenTotal
     }
 
     function cargarDesdeLocalStorage() {
       if (localStorage.getItem('rutinaHTML')) {
         lista.innerHTML = localStorage.getItem('rutinaHTML');
-        volumenTotal = parseInt(localStorage.getItem('volumenTotal')) || 0;
-        volumenSpan.textContent = volumenTotal;
+        // Se eliminó la recuperación de volumenTotal
         document.querySelectorAll('.bloques').forEach(b => new Sortable(b, { animation: 150 }));
       }
+    }
+
+    function mostrarMensaje(msg) {
+      const m = document.getElementById('mensaje');
+      m.textContent = msg;
+      m.classList.remove('hidden');
+      setTimeout(() => m.classList.add('hidden'), 3000);
     }
 </script>
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
