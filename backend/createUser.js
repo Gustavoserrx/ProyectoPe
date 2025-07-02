@@ -12,7 +12,7 @@ async function createRandomUser() {
     // Genera datos aleatorios únicos
     const username = faker.internet.username().toLowerCase();
     const email = faker.internet.email().toLowerCase();
-    const password = 'miPasswordSeguro'; 
+    const password = 'miclave123'; 
 
     // Cifra la contraseña
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -23,6 +23,7 @@ async function createRandomUser() {
     console.log('Usuario guardado con _id:', user._id);
 
     console.log(`✅ Usuario creado: ${username} - ${email}`);
+    console.log(`Contraseña para login: ${password}`);
 
     await mongoose.connection.close();
   } catch (error) {

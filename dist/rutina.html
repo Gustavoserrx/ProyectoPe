@@ -19,6 +19,20 @@
       border-color: #f87171; /* rojo Tailwind */
       box-shadow: 0 0 0 2px rgba(248,113,113,0.5);
     }
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(6px);
+      }
+    }
+    .bouncing-dot {
+      animation: bounce 1.5s infinite;
+    }
+    .animate-bounce {
+      animation: bounce 1.5s infinite;
+    }
   </style>
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
 </head>
@@ -53,15 +67,20 @@
       <source src="/videos/1.MOV" type="video/mp4">
       Tu navegador no soporta el video HTML5.
     </video>
-    <div class="absolute inset-0 bg-black/50 flex flex-col items-center justify-center pt-32 text-center z-20 transition-all duration-700 ease-in-out">
+    <div class="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-center z-20 transition-all duration-700 ease-in-out">
       <h1 class="text-white text-4xl md:text-6xl font-bold uppercase" data-aos="fade-in">
         Crea tu rutina personalizada
       </h1>
       <p class="text-gray-300 text-sm mt-2">Elige tus ejercicios y agrúpalos por días</p>
     </div>
+    <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-30">
+      <div class="w-6 h-10 border-2 border-white rounded-full flex items-start justify-center">
+        <div class="w-1 h-1 bg-white rounded-full mb-1 bouncing-dot"></div>
+      </div>
+    </div>
   </div>
 
-  <div class="relative z-10 -mt-12 sm:-mt-16 pt-24 px-4 bg-white dark:bg-black">
+  <div class="relative z-10 px-4 bg-white dark:bg-black">
     <main class="max-w-3xl mx-auto bg-white dark:bg-black p-6 rounded-xl shadow-lg space-y-6 pb-24">
 <h2 class="text-2xl uppercase text-center" data-aos="fade-up">Crea tu propio bloque de entrenamiento</h2>
     <!-- Formulario de bloque -->
