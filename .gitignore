@@ -19,3 +19,4 @@ build/
 # Archivos temporales o de caché
 *.log
 *.tmp
+backend/createUserManual.js
